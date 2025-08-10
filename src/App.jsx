@@ -12,13 +12,26 @@ const theme = createTheme({
     secondary: { main: "#ffffff" },
     tertiary: { main: "#3B82F6" },
   },
+  typography: {
+    fontFamily: "'Inter', sans-serif", // Default for body
+    h1: { fontFamily: "'Montserrat', sans-serif", fontWeight: 800 }, // Temp
+    h2: { fontFamily: "'Poppins', sans-serif", fontWeight: 700 }, // City name
+    h3: { fontFamily: "'Nunito Sans', sans-serif", fontWeight: 600 }, // Weather description
+    subtitle1: { fontFamily: "'Lora', serif", fontStyle: "italic" }, // Extra info
+  },
 });
 
 export default function App() {
   return (
     <AppContextProvider>
       <ThemeProvider theme={theme}>
-        <Container style={{ display: "flex", minHeight: "100vh"}} >
+        <Container
+          sx={{
+            display: "flex",
+            minHeight: "100vh",
+            p: { xs: 0, sm: 2, md: 3, lg: 4 },
+          }}
+        >
           <AppContent />
         </Container>
       </ThemeProvider>

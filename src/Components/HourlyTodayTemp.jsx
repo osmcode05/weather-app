@@ -35,10 +35,9 @@ export default function HourlyTodayTemp() {
           labelStyle: { fill: "#fff" },
         },
       ]}
-      height={200}
+      height={220}
       sx={{
         backgroundColor: "transparent",
-        pr: 2,
         ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
           stroke: "#ccc",
         },

@@ -1,35 +1,46 @@
 import { TextField, Button, InputAdornment } from "@mui/material";
-import {SearchOutlined, MyLocation} from "@mui/icons-material";
+import { SearchOutlined, MyLocation } from "@mui/icons-material";
 import { styled } from "@mui/system";
 import { useAppContext } from "../Contexts/MyContext";
 import { useState } from "react";
 
-const SearchContainer = styled("form")({
+const SearchContainer = styled("form")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  gap: "8px",
-  padding: "8px",
-});
+  gap: theme.spacing(1),
+  padding: theme.spacing(1),
+  flexWrap: "wrap",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column-reverse",
+    alignItems: "stretch",
+    gap: theme.spacing(1.5),
+  },
+}));
 
-const StyledTextField = styled(TextField)({
+const StyledTextField = styled(TextField)(({ theme }) => ({
   flexGrow: 1,
+  minWidth: 0,
   "& .MuiOutlinedInput-root": {
     backgroundColor: "#1e1e1e",
     color: "#fff",
-    borderRadius: "8px",
+    borderRadius: theme.shape.borderRadius,
     "& fieldset": { border: "none" },
-    "& input": { padding: "12px 16px" },
+    "& input": { padding: theme.spacing(1.5, 2) },
   },
-});
+}));
 
-const StyledButton = styled(Button)({
+const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: "#ebebebff",
-  borderRadius: "8px",
-  padding: "8px 10px",
+  borderRadius: theme.shape.borderRadius,
+  padding: theme.spacing(1, 1.5),
+  whiteSpace: "nowrap",
   "&:hover": {
     backgroundColor: "#fff",
   },
-});
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+  },
+}));
 
 export default function SetLocation() {
   const [inputValue, setInputValue] = useState("");
@@ -37,9 +48,10 @@ export default function SetLocation() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (inputValue.trim()) { setLocation((prev) => ({ ...prev, cityName: inputValue })); }
+    if (inputValue.trim()) {
+      setLocation((prev) => ({ ...prev, cityName: inputValue }));
+    }
   };
-  
 
   return (
     <SearchContainer onSubmit={handleSubmit}>
@@ -57,8 +69,12 @@ export default function SetLocation() {
           ),
         }}
       />
-      <StyledButton startIcon={<MyLocation />} size="large" disableElevation onClick={getLocation} >
-        Locate
+      <StyledButton
+        startIcon={<MyLocation />}
+        disableElevation
+        onClick={getLocation}
+      >
+        My Location
       </StyledButton>
     </SearchContainer>
   );

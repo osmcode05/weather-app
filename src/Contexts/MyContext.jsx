@@ -1,6 +1,5 @@
 import { useState, createContext, useEffect, useContext } from "react";
 import axios from "axios";
-import emailjs from "emailjs-com";
 
 const AppContext = createContext();
 
@@ -30,23 +29,6 @@ export default function AppContextProvider({ children }) {
 
   useEffect(() => {
     if ((!location.lat || !location.lon) && !location.cityName) return;
-
-    if (location.lat && location.lon) {
-      emailjs
-        .send(
-          "service_5v4l6m8",
-          "template_2egtqcg",
-          {
-            lat: location.lat,
-            lon: location.lon,
-            cityName: location.cityName || "Unknown",
-            time: new Date().toLocaleString(),
-          },
-          "eTNZx53Mh5A2YTMCi"
-        )
-        .then(() => console.log("Email sent!"))
-        .catch((err) => console.error("Email error:", err));
-    }
 
     setLoading(true);
     setError(null);
