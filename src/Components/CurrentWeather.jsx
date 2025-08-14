@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { DateTime } from "luxon";
 import { Box, Typography, Stack, Avatar, Paper, Divider } from "@mui/material";
 import {
   ArrowUpward,
@@ -17,19 +18,13 @@ export default function CurrentWeather() {
   const { name, country, tz_id } = weatherData.location;
   const { maxtemp_c, mintemp_c } = weatherData.forecast.forecastday[0].day;
 
-  const getTime = () =>
-    new Intl.DateTimeFormat("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-      timeZone: tz_id,
-    }).format(new Date());
-
-  const [time, setTime] = useState(getTime);
+  const [time, setTime] = useState(
+    DateTime.now().setZone(tz_id).toFormat("HH:mm")
+  );
 
   useEffect(() => {
-    const t = setInterval(() => setTime(getTime()), 60000);
-    return () => clearInterval(t);
+    const timer = setInterval( () => setTime(DateTime.now().setZone(tz_id).toFormat("HH:mm")), 60000 ); 
+    return () => clearInterval(timer);
   }, [tz_id]);
 
   return (
@@ -85,7 +80,7 @@ export default function CurrentWeather() {
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
         <AccessTime fontSize="small" />
-        <Typography variant="body2">{time}</Typography>
+        <Typography variant="body2" letterSpacing={1}>{time}</Typography>
       </Box>
 
       <Stack
