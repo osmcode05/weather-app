@@ -8,7 +8,7 @@ export const fetchData = createAsyncThunk(
     const location = cityName ? cityName : `${lat},${lon}`;
     
     const response = await axios.get(
-      `http://api.weatherapi.com/v1/forecast.json`,
+      `https://api.weatherapi.com/v1/forecast.json`,
       {
         params: {
           key: import.meta.env.VITE_API_KEY,
