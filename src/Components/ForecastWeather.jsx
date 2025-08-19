@@ -1,27 +1,30 @@
 import { Box, Typography, Stack, Avatar, Grid } from "@mui/material";
-import { useAppContext } from "../Contexts/MyContext";
+import { useSelector } from "react-redux";
 
 function ForecastWeather() {
-  const { weatherData } = useAppContext();
-
-  const forecast_Days = weatherData.forecast.forecastday
-    .slice(1)
-    .map((day) => ({
-      date: new Date(day.date).toLocaleDateString("en-US", {
-        weekday: "short",
-      }),
-      maxTemp: day.day.maxtemp_c,
-      minTemp: day.day.mintemp_c,
-      icon: day.day.condition.icon,
-    }));
+  const { weatherData } = useSelector((state) => state.data);
+  
+  const forecast_Days = weatherData.forecast.forecastday.map((day) => ({
+    date: new Date(day.date).toLocaleDateString("en-US", {
+      weekday: "short",
+    }),
+    maxTemp: day.day.maxtemp_c,
+    icon: day.day.condition.icon,
+  }));
 
   return (
     <Box color="secondary.main" textAlign="center">
-      <Typography variant="h5" letterSpacing={2} mb={1} fontWeight={900} color="tertiary.main">
-        Forecast of The Next {forecast_Days.length} Days
+      <Typography
+        variant="h4"
+        letterSpacing={2}
+        p={2}
+        fontWeight={900}
+        color="tertiary.main"
+      >
+        Forecast Of The Next {forecast_Days.length} Days
       </Typography>
 
-      <Grid container>
+      <Grid container display={"flex"} justifyContent={"center"}>
         {forecast_Days.map((day, index) => (
           <Grid key={index} size={{ sm: 2, xs: 4 }} padding={1}>
             <Stack
@@ -35,13 +38,12 @@ function ForecastWeather() {
             >
               <Typography
                 variant="body2"
-                fontWeight={550}
-                letterSpacing={1}
+                letterSpacing={1.5}
+                mb={1.5}
                 color="tertiary.main"
               >
-                {index == 0 ? "Tomorrow" : day.date}
+                {index == 0 ? "Today" : index == 1 ? "Tomorrow" : day.date}
               </Typography>
-              <Typography variant="body2">{day.minTemp + "°"}</Typography>
               <Avatar alt="weather_icon" src={day.icon} />{" "}
               <Typography variant="body2">{day.maxTemp + "°"}</Typography>
             </Stack>

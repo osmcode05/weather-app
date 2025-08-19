@@ -1,7 +1,8 @@
+// MUI
 import { TextField, Button, InputAdornment } from "@mui/material";
 import { SearchOutlined, MyLocation } from "@mui/icons-material";
 import { styled } from "@mui/system";
-import { useAppContext } from "../Contexts/MyContext";
+// React
 import { useState } from "react";
 
 const SearchContainer = styled("form")(({ theme }) => ({
@@ -42,19 +43,22 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export default function SetLocation() {
+export default function SetLocation({ setLocation, getMyLocation }) {
   const [inputValue, setInputValue] = useState("");
-  const { getLocation, setLocation } = useAppContext();
 
+  // Submit form
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputValue.trim()) {
-      setLocation((prev) => ({ ...prev, cityName: inputValue }));
+      setLocation({ lat: null, lon: null, cityName: inputValue });
+      setInputValue("");
     }
   };
 
   return (
     <SearchContainer onSubmit={handleSubmit}>
+
+      {/* Search field */}
       <StyledTextField
         placeholder="Search city or place"
         variant="outlined"
@@ -63,19 +67,18 @@ export default function SetLocation() {
         onChange={(e) => setInputValue(e.target.value)}
         InputProps={{
           startAdornment: (
-            <InputAdornment position="start">
+            <InputAdornment position="start" sx={{ cursor: "pointer" }} onClick={handleSubmit} >
               <SearchOutlined sx={{ color: "rgba(255, 255, 255, 0.6)" }} />
             </InputAdornment>
           ),
         }}
       />
-      <StyledButton
-        startIcon={<MyLocation />}
-        disableElevation
-        onClick={getLocation}
-      >
+
+      {/* Get my location Button */}
+      <StyledButton disableElevation startIcon={<MyLocation />} onClick={getMyLocation} >
         My Location
       </StyledButton>
+
     </SearchContainer>
   );
 }

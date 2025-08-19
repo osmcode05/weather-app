@@ -1,10 +1,11 @@
 import { LineChart } from "@mui/x-charts/LineChart";
-import { useAppContext } from "../Contexts/MyContext";
+import { useSelector } from "react-redux";
 
 const timeLabels = [ "12 AM", "2 AM", "4 AM", "6 AM", "8 AM", "10 AM", "12 PM", "2 PM", "4 PM", "6 PM", "8 PM", "10 PM"];
 
 export default function HourlyTodayTemp() {
-  const { weatherData } = useAppContext();
+  const { weatherData } = useSelector((state) => state.data);
+
   const TodayTempurature = weatherData.forecast.forecastday[0].hour;
   const temperatureData = TodayTempurature.filter((d, i) => i % 2 === 0 ? d : null ).map((item) => item.temp_c);
 

@@ -1,19 +1,15 @@
+// React
 import { useEffect, useState } from "react";
+// Time Functions
 import { DateTime } from "luxon";
+// MUI
 import { Box, Typography, Stack, Avatar, Paper, Divider } from "@mui/material";
-import {
-  ArrowUpward,
-  ArrowDownward,
-  LocationOn,
-  AccessTime,
-  Opacity,
-  Air,
-} from "@mui/icons-material";
-import { useAppContext } from "../Contexts/MyContext";
+import { ArrowUpward, ArrowDownward, LocationOn, AccessTime, Opacity, Air } from "@mui/icons-material";
+// Redux
+import { useSelector } from "react-redux";
 
 export default function CurrentWeather() {
-  const { weatherData } = useAppContext();
-
+  const { weatherData } = useSelector((state) => state.data);
   const { temp_c, condition, wind_kph, humidity } = weatherData.current;
   const { name, country, tz_id } = weatherData.location;
   const { maxtemp_c, mintemp_c } = weatherData.forecast.forecastday[0].day;
