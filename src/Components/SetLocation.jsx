@@ -43,8 +43,19 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export default function SetLocation({ setLocation, getMyLocation }) {
+export default function SetLocation({ setLocation }) {
   const [inputValue, setInputValue] = useState("");
+
+  // Get user location
+  const getMyLocation = () => {
+    navigator.geolocation.getCurrentPosition((pos) =>
+      setLocation({
+        lat: pos.coords.latitude,
+        lon: pos.coords.longitude,
+        cityName: null,
+      })
+    );
+  };
 
   // Submit form
   const handleSubmit = (e) => {
@@ -57,7 +68,6 @@ export default function SetLocation({ setLocation, getMyLocation }) {
 
   return (
     <SearchContainer onSubmit={handleSubmit}>
-
       {/* Search field */}
       <StyledTextField
         placeholder="Search city or place"
@@ -78,7 +88,6 @@ export default function SetLocation({ setLocation, getMyLocation }) {
       <StyledButton disableElevation startIcon={<MyLocation />} onClick={getMyLocation} >
         My Location
       </StyledButton>
-
     </SearchContainer>
   );
 }

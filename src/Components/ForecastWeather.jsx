@@ -14,32 +14,26 @@ function ForecastWeather() {
 
   return (
     <Box color="secondary.main" textAlign="center">
-      <Typography
-        variant="h4"
-        letterSpacing={2}
-        p={2}
-        fontWeight={900}
-        color="tertiary.main"
-      >
+      <Typography variant="h4" letterSpacing={2} p={2} color="tertiary.main">
         Forecast Of The Next {forecast_Days.length} Days
       </Typography>
 
-      <Grid container display={"flex"} justifyContent={"center"}>
+      <Grid container display={"flex"} justifyContent={"center"}mb={2}>
         {forecast_Days.map((day, index) => (
-          <Grid key={index} size={{ sm: 2, xs: 4 }} padding={1}>
+          <Grid key={index} size={{ sm: 2, xs: 4 }} px={0.5}>
             <Stack
               sx={{
                 py: 1.5,
                 gap: 1,
                 backgroundColor: "primary.light",
                 alignItems: "center",
-                borderRadius: 1,
+                borderRadius: 1.5,
               }}
             >
               <Typography
                 variant="body2"
                 letterSpacing={1.5}
-                mb={1.5}
+                fontWeight={600}
                 color="tertiary.main"
               >
                 {index == 0 ? "Today" : index == 1 ? "Tomorrow" : day.date}

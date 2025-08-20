@@ -27,6 +27,7 @@ const theme = createTheme({
     h1: { fontFamily: "'Montserrat', sans-serif", fontWeight: 800 },
     h2: { fontFamily: "'Poppins', sans-serif", fontWeight: 700 },
     h3: { fontFamily: "'Nunito Sans', sans-serif", fontWeight: 600 },
+    h4: { fontFamily: "'Poppins', sans-serif" },
     subtitle1: { fontFamily: "'Lora', serif", fontStyle: "italic" },
   },
 });
@@ -43,23 +44,12 @@ export default function App() {
 
 function AppContent() {
   const dispatch = useDispatch();
-  const [location, setLocation] = useState({lat: null, lon: null, cityName: "Barcelona"});
-
-  // Get user location
-  const getMyLocation = () => {
-    navigator.geolocation.getCurrentPosition((pos) =>
-      setLocation({ lat: pos.coords.latitude, lon: pos.coords.longitude, cityName: null})
-    );
-  };
-  // Initial fetch (try geolocation first)
-  useEffect(getMyLocation, []); 
+  const [location, setLocation] = useState({lat: null, lon: null, cityName: "Taddart"}); // Default location
 
   // Fetch whenever location changes
-  useEffect(() => {
-    // if (location.lat === null && location.lon === null) return;
-    dispatch(fetchData(location))
-  }, [dispatch, location]);
+  useEffect(() => {dispatch(fetchData(location))}, [dispatch, location]);
 
+  // Data from store
   const { weatherData, loading, error } = useSelector((state) => state.data);
 
   // if there is an error
@@ -73,14 +63,14 @@ function AppContent() {
       {weatherData && (
         <Grid container spacing={2} width="100%" alignItems="center" justifyContent="center" >
           
-          <Grid item xs={12} md={5}>
+          <Grid size={{ md: 5, xs: 12 }}>
             <Box width="100%" mb={3}>
-              <SetLocation setLocation={setLocation} getMyLocation={getMyLocation} />
+              <SetLocation setLocation={setLocation}/>
             </Box>
             <Box m="auto"> <CurrentWeather /> </Box>
           </Grid>
 
-          <Grid item xs={12} md={7}>
+          <Grid size={{ md: 7, xs: 12 }}>
             <Box width="100%"> <ForecastWeather /> </Box>
             <Box width="100%"> <HourlyTodayTemp /> </Box>
           </Grid>
